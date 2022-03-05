@@ -17,8 +17,9 @@ const (
 
 type cardDigits [4]int
 
-func (c *cardDigits) to(i int) int {
-	return c[i-1]
+// to returns the first n digits of the card number as an int
+func (c *cardDigits) to(n int) int {
+	return c[n-1]
 }
 
 func (c *cardDigits) assembleCardDigits(cardNumber string) error {
