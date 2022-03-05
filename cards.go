@@ -11,7 +11,7 @@ const (
 	jcb        = "JCB"
 	maestro    = "Maestro"
 	visa       = "Visa"
-	mastercard = "Mastercard"
+	mastercard = "MasterCard"
 	unknown    = "Unknown Card Scheme"
 )
 

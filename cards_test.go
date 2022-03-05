@@ -1,6 +1,10 @@
 package cards
 
-import "testing"
+import (
+	"encoding/json"
+	"io/ioutil"
+	"testing"
+)
 
 func TestIsCardNumberValid(t *testing.T) {
 	type args struct {
@@ -69,4 +73,35 @@ func TestCardScheme(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestCardSchemeFixtures(t *testing.T) {
+
+	type creditCardData struct {
+		IssuingNetwork string
+		CardNumber     string
+	}
+
+	type card struct {
+		CreditCard creditCardData
+	}
+
+	b, err := ioutil.ReadFile("testdata/data.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	var cards []card
+
+	err = json.Unmarshal(b, &cards)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, c := range cards {
+		if got := CardScheme(c.CreditCard.CardNumber); got != c.CreditCard.IssuingNetwork {
+			t.Errorf("CardScheme(%q) = %q, want %q", c.CreditCard.CardNumber, got, c.CreditCard.IssuingNetwork)
+		}
+	}
+
 }
